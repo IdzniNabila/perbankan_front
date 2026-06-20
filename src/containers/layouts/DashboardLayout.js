@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import { closeToast } from '../../actions/toast';
-import Sidebar from '../../components/Dashboard/Sidebar';
+import Navbar from '../../components/Dashboard/Navbar';
 
 const DashboardLayout = (props) => {
 
@@ -15,22 +15,18 @@ const DashboardLayout = (props) => {
 	}
 
 	useEffect(() => {
-		// masih blom bisa toast nya masih muncul di halaman lain
 		if (message === null) {
 			props.history.listen((location, action) => {
 				dispatch(closeToast());
 			})
 		}
-
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-
 	return (
-		<div className="dashboard-layout-wrapper">
-			<Sidebar />
-			<div className="main-content">
-
+		<div className="dashboard-layout-wrapper" style={{ display: 'block', minHeight: '100vh', background: 'var(--bg-gradient)' }}>
+			<Navbar />
+			<div className="container mt-4" style={{ paddingBottom: '40px' }}>
 				{/*Notif*/}
 				{show ? 
 					<div className="alert alert-success alert-dismissible fade show" role="alert">
