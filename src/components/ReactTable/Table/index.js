@@ -14,38 +14,24 @@ function GlobalFilter({
   const count = preGlobalFilteredRows.length
 
   return (
-    <div className="form-group row">
-      <label className="col-sm-2 col-form-label">Search</label>
-      <div className="col-sm-10">
-	      <input
-	        value={globalFilter || ''}
-	        onChange={e => {
-	          setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
-	        }}
-	        className="form-control"
-	        placeholder={`${count} records...`}
-	      />
-      </div>
+    <div className="d-flex align-items-center mb-3">
+      <span className="font-weight-bold text-muted mr-3">Cari:</span>
+      <input
+        value={globalFilter || ''}
+        onChange={e => {
+          setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
+        }}
+        className="form-control"
+        style={{ borderRadius: '8px', minWidth: '250px' }}
+        placeholder={`Pencarian dari ${count} data...`}
+      />
     </div>	    
   )
 }
 
-// Define a default UI for filtering
-function DefaultColumnFilter({
-  column: { filterValue, preFilteredRows, setFilter },
-}) {
-  const count = preFilteredRows.length
-
-  return (
-    <input
-      value={filterValue || ''}
-      className="form-control"
-      onChange={e => {
-        setFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
-      }}
-      placeholder={`Search ${count} records...`}
-    />
-  )
+// DefaultColumnFilter removed to save space and clean UI
+function DefaultColumnFilter() {
+  return null;
 }
 
 // function fuzzyTextFilterFn(rows, id, filterValue) {
@@ -141,12 +127,11 @@ export default function Table ({ columns, data })  {
 	          {headerGroups.map(headerGroup => (
 	            <tr {...headerGroup.getHeaderGroupProps()}>
 	              {headerGroup.headers.map(column => (
-	                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{ verticalAlign: 'middle', cursor: 'pointer' }}>
+	                <th {...column.getHeaderProps(column.getSortByToggleProps())} style={{ verticalAlign: 'middle', cursor: 'pointer', whiteSpace: 'nowrap' }}>
 	                	{column.render('Header')}
 		                <span>
 		                  &nbsp; {column.isSorted ? (column.isSortedDesc ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} /> ) : ''}
 		                </span>
-	                    <div>{column.canFilter ? column.render('Filter') : null}</div>
 	                </th>
 	              ))}
 	            </tr>
